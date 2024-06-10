@@ -4,7 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+
+
+use function PHPSTORM_META\type;
 
 class ProjectController extends Controller
 {
@@ -22,24 +29,31 @@ class ProjectController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    { {
-            return view('admin.projects.create');
-        }
+    {
+
+        $types = Type::orderBY('name', 'asc')->get();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $request->validate([
-            'nome_progetto' => 'required|min:3',
-            'descrizione_progetto' => 'required|min:3',
-            'link_github_progetto' => 'required'
-        ]);
+        $request->validated();
 
         $form_data = $request->all();
-
+        $base_slug = Str::slug($form_data['title']);
+        $slug = $base_slug;
+        $n = 0;
+        do {
+            $find = Project::where('slug', $slug)->first();
+            if ($find !== null) {
+                $n++;
+                $slug = $base_slug . '-' . $n;
+            }
+        } while ($find !== null);
+        $form_data['slug'] = $slug;
         $new_project = Project::create($form_data);
 
         return to_route('admin.projects.index', $new_project);
@@ -64,15 +78,23 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $request->validate([
-            'nome_progetto' => 'required|min:3',
-            'descrizione_progetto' => 'required|min:3',
-            'link_github_progetto' => 'required'
-        ]);
+        $request->validate();
 
         $form_data = $request->all();
+
+        $base_slug = Str::slug($form_data['title']);
+        $slug = $base_slug;
+        $n = 0;
+        do {
+            $find = Project::where('slug', $slug)->first();
+            if ($find !== null) {
+                $n++;
+                $slug = $base_slug . '-' . $n;
+            }
+        } while ($find !== null);
+        $form_data['slug'] = $slug;
 
         $project->fill($form_data);
 

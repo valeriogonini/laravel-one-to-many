@@ -24,6 +24,13 @@
           <label for="nome_progetto" class="form-label">Nome Progetto</label>
           <input type="text" name="nome_progetto" class="form-control" id="nome_progetto" placeholder="Inserisci nome progetto">
         </div>
+        <select name="type_id" id="type_id">
+          <option value="">Select Type</option>
+          @foreach ($types as $type)
+              <option @selected($type->id == old('type_id')) value="{{$type->id}}">
+                {{$type->name}} </option>
+          @endforeach
+        </select>
         <div class="mb-3">
             <label for="descrizione_progetto" class="form-label">Descrizione Progetto</label>
             <textarea class="form-control" name="descrizione_progetto" id="descrizione_progetto" rows="3"></textarea>

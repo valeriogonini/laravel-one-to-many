@@ -9,6 +9,7 @@
         <th scope="col">Id</th>
         <th scope="col">Nome Progetto</th>
         <th scope="col">Descrizione Progetto</th>
+        <th scope="col">Type id</th>
         <th scope="col">Link GitHub</th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -20,6 +21,7 @@
         <tr>
             <th scope="row">{{$project -> id}}</th>
             <td>{{$project -> nome_progetto}}</td>
+            <td>{{optional($project->type_id)}}</td>
             <td>{{$project -> descrizione_progetto}}</td>
             <td><a href="{{$project -> link_github_progetto}}" target="_blank">Link</a></td>
             <td><a href="{{route('admin.projects.edit',$project)}}">Modifica</a></td>

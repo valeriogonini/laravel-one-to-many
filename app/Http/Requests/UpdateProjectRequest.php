@@ -11,7 +11,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,10 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             //
+            'nome_progetto' => 'required|min:3',
+            'descrizione_progetto' => 'required|min:3',
+            'link_github_progetto' => 'required',
+            'type_id' => 'required'
         ];
     }
 }
