@@ -21,8 +21,8 @@
         <tr>
             <th scope="row">{{$project -> id}}</th>
             <td>{{$project -> nome_progetto}}</td>
-            <td>{{optional($project->type_id)}}</td>
             <td>{{$project -> descrizione_progetto}}</td>
+            <td>{{$project->type->name}}</td>
             <td><a href="{{$project -> link_github_progetto}}" target="_blank">Link</a></td>
             <td><a href="{{route('admin.projects.edit',$project)}}">Modifica</a></td>
             <td> <form action="{{route('admin.projects.destroy', $project)}}" method="POST">

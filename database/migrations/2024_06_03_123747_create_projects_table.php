@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('nome_progetto');
+            $table->string('slug');
             $table->text('descrizione_progetto');
             $table->string('link_github_progetto');
             $table->timestamps();

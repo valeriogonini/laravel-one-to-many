@@ -31,7 +31,7 @@ class ProjectController extends Controller
     public function create()
     {
 
-        $types = Type::orderBY('name', 'asc')->get();
+        $types = Type::orderBy('name', 'asc')->get();
         return view('admin.projects.create', compact('types'));
     }
 
@@ -43,7 +43,7 @@ class ProjectController extends Controller
         $request->validated();
 
         $form_data = $request->all();
-        $base_slug = Str::slug($form_data['title']);
+        $base_slug = Str::slug($form_data['nome_progetto']);
         $slug = $base_slug;
         $n = 0;
         do {
@@ -84,7 +84,7 @@ class ProjectController extends Controller
 
         $form_data = $request->all();
 
-        $base_slug = Str::slug($form_data['title']);
+        $base_slug = Str::slug($form_data['nome_progetto']);
         $slug = $base_slug;
         $n = 0;
         do {
